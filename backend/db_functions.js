@@ -4,7 +4,7 @@ import path from "path"
 import { fileURLToPath } from "url"
 import PromptSync from "prompt-sync"
 import chalk from "chalk"
-import passwordHandler from "./passwordHandler.js"
+import {passwordHandler} from "./passwordHandler.cjs"
 
 const prompt = PromptSync()
 const log = console.log
@@ -75,7 +75,9 @@ const dbHandler = {
         }
         else {
             log(chalk.bgBlack(chalk.yellow("\n\n*********************************\nNo administrator account found...\nStarting inital admin creation.  \n*********************************")))
-            dbHandler.createAdmin()
+            
+            passwordHandler.hashPassword('asdfasdfasdf')
+            // dbHandler.createAdmin()
         }
     },
     createAdmin: () => {
