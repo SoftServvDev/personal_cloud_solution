@@ -1,4 +1,4 @@
-const bcrypt = require('bcrypt')
+import * as bcrypt from 'bcrypt'
 const saltRounds = 10
 
 const passwordHandler = {
@@ -24,6 +24,4 @@ const passwordHandler = {
     }
 }
 
-module.exports = {
-    passwordHandler
-}
+export default passwordHandler

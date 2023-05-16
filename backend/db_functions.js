@@ -4,7 +4,7 @@ import path from "path"
 import { fileURLToPath } from "url"
 import PromptSync from "prompt-sync"
 import chalk from "chalk"
-import passwordHandler from "./passwordHandler.cjs"
+import passwordHandler from "./passwordHandler.js"
 
 const prompt = PromptSync()
 const log = console.log
