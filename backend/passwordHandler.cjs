@@ -24,4 +24,6 @@ const passwordHandler = {
     }
 }
 
-export default passwordHandler
+module.exports = {
+    passwordHandler
+}
