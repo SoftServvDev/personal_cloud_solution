@@ -4,7 +4,8 @@ import path from "path"
 import { fileURLToPath } from "url"
 import PromptSync from "prompt-sync"
 import chalk from "chalk"
-import {passwordHandler} from "./passwordHandler.cjs"
+import {passwordHandler} from "./passwordHandler.js"
+import jwt from 'jsonwebtoken'
 
 const prompt = PromptSync()
 const log = console.log
@@ -75,9 +76,8 @@ const dbHandler = {
         }
         else {
             log(chalk.bgBlack(chalk.yellow("\n\n*********************************\nNo administrator account found...\nStarting inital admin creation.  \n*********************************")))
-            
-            passwordHandler.hashPassword('asdfasdfasdf')
-            // dbHandler.createAdmin()
+
+            dbHandler.createAdmin()
         }
     },
     createAdmin: () => {
@@ -112,38 +112,34 @@ const dbHandler = {
             const newAdmin = await User.create({ firstName: firstName, lastName: lastName, screenName: screenName, email: email, password: password, administrator: admin, host: host })
             log(chalk.bgBlack(chalk.cyan("\n\n============================================================\n\nAdmin account for " + screenName + " has been created.")))
             log(chalk.bgBlack(chalk.greenBright("\n\n\nThe server is online, and your administrator account has been created.")))
-        } catch(err) {
+        } catch (err) {
             log(chalk.red("ERROR: ") + err)
         }
     },
-    getHost: async() => {
-        try{
+    getHost: async () => {
+        try {
             const hostName = await User.findOne({
                 where: {
                     host: true
                 }
             })
             return hostName.screenName
-        } catch(err) {
-            return {"Error: ": err}
+        } catch (err) {
+            return { "Error: ": err }
         }
     },
-    loginUser: async(email, password) => {
-        try{
+    loginUser: async (em, pass) => {
+        try {
             const user = await User.findOne({
                 where: {
-                    email: email
+                    email: em
                 }
             })
-            let verify = passwordHandler.checkHash(password, user.password)
-            if(verify){
-                return true
-            }
-            else{
-                return false
-            }
-        } catch(err){
-            return err
+            let verify = passwordHandler.checkHash(pass, String(user.password))
+            console.log(verify)
+            return verify
+        } catch (err) {
+            console.log(err)
         }
     }
 }
