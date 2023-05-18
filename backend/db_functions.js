@@ -5,7 +5,7 @@ import { fileURLToPath } from "url"
 import PromptSync from "prompt-sync"
 import chalk from "chalk"
 import {passwordHandler} from "./passwordHandler.js"
-import jwt from 'jsonwebtoken'
+import fs from 'fs'
 
 const prompt = PromptSync()
 const log = console.log
@@ -136,10 +136,16 @@ const dbHandler = {
                 }
             })
             let verify = passwordHandler.checkHash(pass, String(user.password))
-            console.log(verify)
-            return verify
+            return {user: user, verify: verify}
         } catch (err) {
             console.log(err)
+        }
+    },
+    getFolders: (token) => {
+        const verify = dbHandler.verifyToken(token)
+        if(verify){
+            const folderPath = path.join(__dirname, "/FILESHARE")
+            console.log(fs.readdirSync(folderPath))
         }
     }
 }

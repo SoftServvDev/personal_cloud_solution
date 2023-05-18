@@ -1,0 +1,21 @@
+.folder:hover{
+    background-color: gray;
+}
+
+.folder a:hover{
+    color: white;
+}
+
+.folder{
+    padding: 5px;
+}
+
+.folder a{
+    color: black;
+    text-decoration: none;
+}
+
+.folder p{
+    width: 100%;
+    text-align: center;
+}
